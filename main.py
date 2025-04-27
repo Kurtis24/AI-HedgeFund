@@ -1,7 +1,7 @@
 from tools.webscrape import WebScrape
 from transformers import pipeline
 
-pipe = pipeline("sentiment-analysis", model="tabularisai/multilingual-sentiment-analysis")
+pipe = pipeline("text-classification", model="SeanD103/Longformer_for_financial_sentiment_analysis")
 
 webscraper = WebScrape()
 urls = webscraper.get_urls()
