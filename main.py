@@ -1,11 +1,14 @@
-import torch
+from tools.webscrape import WebScrape
 from transformers import pipeline
 
-# Load the classification pipeline with the specified model
 pipe = pipeline("sentiment-analysis", model="tabularisai/multilingual-sentiment-analysis")
 
-# Classify a new sentence
-result = pipe("I love this product! It's amazing and works perfectly.")
+webscraper = WebScrape()
+urls = webscraper.get_urls()
 
-# Print the result
-print(result)
+for row in urls.itertuples(index=False):
+    url = row.URL
+    content = webscraper.get_text_from_url(url)
+
+    result = pipe(content)
+    print(result)

@@ -30,7 +30,7 @@ class WebScrape():
     # makes it so that the window pops up for a sec real quick
     def setup_uc(self) -> uc.Chrome:
         opts = uc.ChromeOptions()
-        # opts.add_argument("--window-position=-32000,-32000")
+        opts.add_argument("--window-position=-32000,-32000")
 
         opts.add_argument("--disable-blink-features=AutomationControlled")
         opts.add_argument("--user-agent="
@@ -41,10 +41,10 @@ class WebScrape():
         return driver
 
 
-ws = WebScrape()
-urls = ws.get_urls()
-
 if __name__ == "__main__":
+    ws = WebScrape()
+    urls = ws.get_urls()
+
     for row in urls.itertuples(index=False):
         url = row.URL
         print(url)
