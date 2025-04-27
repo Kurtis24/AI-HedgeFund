@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import undetected_chromedriver as uc
+import yfinance as yf
 
 from pyfinviz.news import News
 from trafilatura import extract
@@ -16,6 +17,19 @@ class WebScrape():
         url_df = pd.DataFrame(self.news.news_df["URL"])
         url_df.columns = ["URL"]
         return url_df
+
+    def get_yfinance_url(self, ticker: str) -> pd.DataFrame:
+        news_data = yf.Ticker(ticker)
+        url_array = []
+
+        for data in news_data.news:
+            content = data["content"]
+            url = content["clickThroughUrl"]
+
+            if url is not None:
+                url_array.append({"URL": url["url"]})
+
+        return pd.DataFrame(url_array)
 
     # fetches text from a url, returns text as a list
     def get_text_from_url(self, url: str) -> str:
@@ -43,13 +57,23 @@ class WebScrape():
         self.driver.close()
 
 
+# testing the method
 if __name__ == "__main__":
     ws = WebScrape()
-    urls = ws.get_finviz_urls()
+    df = ws.get_yfinance_url("AAPL")
 
-    for row in urls.itertuples(index=False):
+    for row in df.itertuples(index=False):
         url = row.URL
         print(url)
         print(ws.get_text_from_url(url))
         # prevents ratelimit maybe
         time.sleep(0.1)
+
+    # urls = ws.get_finviz_urls()
+    #
+    # for row in urls.itertuples(index=False):
+    #     url = row.URL
+    #     print(url)
+    #     print(ws.get_text_from_url(url))
+    #     # prevents ratelimit maybe
+    #     time.sleep(0.1)
