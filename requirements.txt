@@ -3,3 +3,4 @@ pyfinviz==1.2
 trafilatura==2.0.0
 transformers==4.46.3
 undetected_chromedriver==3.5.5
+yfinance==0.2.56
