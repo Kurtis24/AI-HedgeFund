@@ -1,8 +1,0 @@
-Downloads
-
-Virtual Enviorment:
-python -m venv .env
-source .env/bin/activate
-
-Hugging Face:
-pip install transformers torch tensorflow tf-keras requests

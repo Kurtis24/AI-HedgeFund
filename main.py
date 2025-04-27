@@ -12,3 +12,5 @@ for row in urls.itertuples(index=False):
 
     result = pipe(content)
     print(result)
+
+webscraper.close_window()

@@ -40,6 +40,9 @@ class WebScrape():
         driver = uc.Chrome(options=opts)
         return driver
 
+    def close_window(self):
+        self.driver.close()
+
 
 if __name__ == "__main__":
     ws = WebScrape()
