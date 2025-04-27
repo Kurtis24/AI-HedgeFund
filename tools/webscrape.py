@@ -1,5 +1,4 @@
 import time
-
 import pandas as pd
 import undetected_chromedriver as uc
 
@@ -13,7 +12,7 @@ class WebScrape():
         self.driver = self.setup_uc()
 
     # gets the url from pyfinviz, returns as a pd dataframe
-    def get_urls(self) -> pd.DataFrame:
+    def get_finviz_urls(self) -> pd.DataFrame:
         url_df = pd.DataFrame(self.news.news_df["URL"])
         url_df.columns = ["URL"]
         return url_df
@@ -46,7 +45,7 @@ class WebScrape():
 
 if __name__ == "__main__":
     ws = WebScrape()
-    urls = ws.get_urls()
+    urls = ws.get_finviz_urls()
 
     for row in urls.itertuples(index=False):
         url = row.URL

@@ -4,7 +4,7 @@ from transformers import pipeline
 pipe = pipeline("text-classification", model="SeanD103/Longformer_for_financial_sentiment_analysis")
 
 webscraper = WebScrape()
-urls = webscraper.get_urls()
+urls = webscraper.get_finviz_urls()
 
 for row in urls.itertuples(index=False):
     url = row.URL
