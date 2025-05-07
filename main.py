@@ -24,7 +24,7 @@ def ticker_data(ticker):
     urls = webscraper.get_yfinance_url(ticker)
 
     score = 0.0
-    counts = {"POSITIVE": 0, "NEGATIVE": 0, "NEUTRAL": 0}    
+    counts = {}    
 
     for row in urls.itertuples(index=False):
         content = webscraper.get_text_from_url(row.URL)
@@ -32,7 +32,8 @@ def ticker_data(ticker):
         score, counts = calculate_score(results, score, counts)
 
     # final report
-    print(f"Final score: {score}")
+    print(f"Final score: {score:.2f}")
+    print("Counts:", counts)
 
     webscraper.close_window()
 
@@ -43,21 +44,22 @@ def calculate_score(results, score, counts):
     counts:  dict to accumulate label counts
     """
     for res in results:
-        label = res['label'].upper()  # ensure consistency
-        if label not in counts:
-            # guard in case you get something unexpected
-            counts[label] = 0
+        # the pipeline gives e.g. 'POSITIVE'
+        label = res["label"].upper()
+
+        # initialize count for this label if needed
+        counts.setdefault(label, 0)
         counts[label] += 1
 
-        if label == "Positive":
+        # match against the uppercase labels
+        if   label == "POSITIVE":
             score += 0.1
-        elif label == "Negative":
-            score -= 0.1
-        # neutral: no change
+        elif label == "NEGATIVE":
+            score -= 0.1        # neutral: no change
 
     return score, counts
 
     
 
 # test for ticker based data
-ticker_data("TSLA")
+ticker_data("NVDA")

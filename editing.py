@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-"""
-trading_bot.py
-
-Fetches a technical buy recommendation and combines it directly with sentiment to compute a combined signal.
-Both technical and sentiment scores are raw values in [0, 1].
-"""
 import argparse
 import requests
 import datetime
@@ -51,10 +44,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="Fetch technical signal and combine with sentiment score."
     )
-    parser.add_argument("--api_key", type=str, required=True,
-                        help="Technical analysis API key.")
-    parser.add_argument("--sentiment", type=float, required=True,
-                        help="Sentiment score (0 to 1).")
+    parser.add_argument("--api_key", type=str, required=True, help="Technical analysis API key.")
+    parser.add_argument("--sentiment", type=float, required=True, help="Sentiment score (0 to 1).")
     args = parser.parse_args()
 
     # 1. Fetch technical signal
